@@ -1,13 +1,14 @@
 <html>
 <head>
 <meta charset="utf-16" />
-<title>Carte Eligibilité Essonne Numérique</title>
+<title>Carte localisation NRO et SRO</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet" />
 <style>
 	body { margin: 0; padding: 0; }
 	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
 	.legend {
 background-color: #fff;
 border-radius: 3px;
@@ -25,29 +26,6 @@ margin: 0 0 10px;
 }
  
 .legend div span {
-border-radius: 0%;
-display: inline-block;
-height: 10px;
-margin-right: 5px;
-width: 30px;
-}
-	.legend2 {
-background-color: #fff;
-border-radius: 3px;
-bottom: 30px;
-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-padding: 5px;
-position: absolute;
-right: 300px;
-z-index: 1;
-}
- 
-.legend2 h4 {
-margin: 0 0 10px;
-}
- 
-.legend2 div span {
 border-radius: 50%;
 display: inline-block;
 height: 10px;
@@ -72,7 +50,7 @@ width: 10px;
 	mapboxgl.accessToken = 'pk.eyJ1IjoiYmFsbGVyZWF1IiwiYSI6ImNrOGZ5Z3M2MzA0dHAzZXBrcDQwbzN5YzIifQ.UpKvOA9C3E4M9bOoG7r1yg';
     var map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/ballereau/ck7bzhy7q00fq1irwkzovmv89',
+        style: 'mapbox://styles/ballereau/ckvtngmi726mq16quf0gyl21l',
         center: [2.306518, 48.523618],
         zoom: 9.5
     });
@@ -84,180 +62,131 @@ width: 10px;
             mapboxgl: mapboxgl
         })
     );
-    map.on('click', function(e) {
-  var features = map.queryRenderedFeatures(e.point, {
-    layers: ['prises-commercialisables'] // replace this with the name of the layer
-  });
-  if (!features.length) {
-    return;
-  }
-  var feature = features[0];
-  var popup = new mapboxgl.Popup({
-      offset: [0, -15]
-    })
-    .setLngLat(feature.geometry.coordinates)
-    .setHTML('<strong>Informations sur le bâtiment : </strong>' +'</p>' + feature.properties.Voie +'</p>'+feature.properties.Commune +'</p>'+ " Statut du bâtiment : " + feature.properties.EtatImmeuble + '</p>'+ "ad_hexaclé : " + feature.properties.ad_hexacle + '</p>' + "ad_batcode : " + feature.properties.ad_batcode + '</p>' + "Nom de la zone : " + feature.properties.SRO + '</p>' + "Opérateurs disponibles sur tout le territoire : " +'<a href="http://www.coriolis.com/forfait-internet/fibre-coriolis-canal/?utm_source=covage&utm_medium=logo_coriolis&utm_campaign=prospects_fibre_dsp" target="_blank">CORIOLIS</a>'+", "+'<a href="https://www.k-net.fr/" target="_blank">K-NET</a>'+", "+'<a href="https://www.kiwi-fibre.fr/" target="_blank">KIWI</a>'+", "+'<a href="https://www.nordnet.com/" target="_blank">NORDNET</a>'+", "+ '<a href="https://boutique.orange.fr/eligibilite" target="_blank">ORANGE</a>'+", "+'<a href="https://www.ozone.net/" target="_blank">OZONE</a>'+", "+'<a href="https://www.sosh.fr/" target="_blank">SOSH</a>'+", "+'<a href="https://lafibrevideofutur.fr/?gclid=EAIaIQobChMIwtXB5YuW7AIVGfhRCh2v8Qk4EAAYASAAEgJBOvD_BwE&gclsrc=aw.ds" target="_blank">VIDEOFUTUR</a>'+ '</p>' + "Opérateurs disponibles sur certaines zones : " +'<a href="https://www.bouyguestelecom.fr/" target="_blank">BOUYGUES TELECOM</a>'+", "+'<a href="https://www.red-by-sfr.fr/" target="_blank">Red by SFR</a>'+", "+'<a href="https://www.sfr.fr/" target="_blank">SFR</a>'+ '</p>' + "Plus d'informations sur les " +'<a href="http://essonnenumerique.com/suis-je-eligible/operateurs-disponibles-2/" target="_blank">opérateurs disponibles</a>')
-    .addTo(map);
-});
-// Change the cursor to a pointer when the mouse is over the prises-commercialisables layer.
-map.on('mouseenter', 'prises-commercialisables', function() {
-map.getCanvas().style.cursor = 'pointer';
-});
-// Change it back to a pointer when it leaves.
-map.on('mouseleave', 'prises-commercialisables', function() {
-map.getCanvas().style.cursor = '';
-});
-
-    map.on('click', function(e) {
-  var features = map.queryRenderedFeatures(e.point, {
-    layers: ['prises-arcep'] // replace this with the name of the layer
-  });
-  if (!features.length) {
-    return;
-  }
-  var feature = features[0];
-  var popup = new mapboxgl.Popup({
-      offset: [0, -15]
-    })
-    .setLngLat(feature.geometry.coordinates)
-    .setHTML('<strong>Informations sur le bâtiment : </strong>' +'</p>' + feature.properties.Voie +'</p>'+feature.properties.Commune +'</p>' + "ad_hexaclé : " + feature.properties.imb_id +'</p>' + "État : " + feature.properties.imb_etat +'</p>' + "Opérateurs d'infrastructures : " + feature.properties.op_infra)
-    .addTo(map);
-});
-// Change the cursor to a pointer when the mouse is over the prises-arcep layer.
-map.on('mouseenter', 'prises-arcep', function() {
-map.getCanvas().style.cursor = 'pointer';
-});
-// Change it back to a pointer when it leaves.
-map.on('mouseleave', 'prises-arcep', function() {
-map.getCanvas().style.cursor = '';
-});
-
-
+    
 map.on('load', function() {
-// Add a source for the JALON polygons.
-map.addSource('4jalon', {
+// Add a source for the SRO points.
+map.addSource('sro', {
 'type': 'geojson',
 'data':
-'ballereau.8fmnw92i'
+'ballereau.anavvdax'
+});
 });
  
  
 // When a click event occurs on a feature in the states layer, open a popup at the
 // location of the click, with description HTML from its properties.
-map.on('click', '4jalon', function(e) {
+map.on('click', 'sro', function(e) {
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
-.setHTML('<strong>Jalon 4</strong>' +'</p>'+ "Nom de la zone : " + e.features[0].properties.zs_r3_code)
+.setHTML('<strong>SRO : </strong>' + e.features[0].properties.st_nom +'</p>' + e.features[0].properties.Adresse +'</p> '+ e.features[0].properties.CP +' '+ e.features[0].properties.VILLE)
 .addTo(map);
 });
  
-// Change the cursor to a pointer when the mouse is over the JALON layer.
-map.on('mouseenter', '4jalon', function() {
+// Change the cursor to a pointer when the mouse is over the SRO layer.
+map.on('mouseenter', 'sro', function() {
 map.getCanvas().style.cursor = 'pointer';
 });
  
 // Change it back to a pointer when it leaves.
-map.on('mouseleave', '4jalon', function() {
+map.on('mouseleave', 'sro', function() {
 map.getCanvas().style.cursor = '';
 });
-});
+
 
 map.on('load', function() {
-// Add a source for the JALON polygons.
-map.addSource('3jalon', {
+// Add a source for the NRO points.
+map.addSource('nro', {
 'type': 'geojson',
 'data':
-'ballereau.34zy1ipl'
+'ballereau.1ne863tv'
+});
 });
  
  
 // When a click event occurs on a feature in the states layer, open a popup at the
 // location of the click, with description HTML from its properties.
-map.on('click', '3jalon', function(e) {
+map.on('click', 'nro', function(e) {
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
-.setHTML('<strong>Jalon 3</strong>' +'</p>'+ "Nom de la zone : " + e.features[0].properties.zs_r3_code)
+.setHTML('<strong>NRO : </strong>' + e.features[0].properties.st_nom +'</p>' + e.features[0].properties.Voie +'</p> '+ e.features[0].properties.Commune)
 .addTo(map);
 });
  
-// Change the cursor to a pointer when the mouse is over the JALON layer.
-map.on('mouseenter', '3jalon', function() {
+// Change the cursor to a pointer when the mouse is over the SRO layer.
+map.on('mouseenter', 'sro', function() {
 map.getCanvas().style.cursor = 'pointer';
 });
  
 // Change it back to a pointer when it leaves.
-map.on('mouseleave', '3jalon', function() {
+map.on('mouseleave', 'sro', function() {
+map.getCanvas().style.cursor = '';
+});
+
+
+map.on('load', function() {
+// Add a source for the ZASRO polygons.
+map.addSource('zasro', {
+'type': 'geojson',
+'data':
+'ballereau.9btvn03n'
+});
+
+ 
+ 
+// When a click event occurs on a feature in the states layer, open a popup at the
+// location of the click, with description HTML from its properties.
+map.on('click', 'zasro', function(e) {
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML('<strong>ZASRO</strong>' +'</p>'+ e.features[0].properties.zs_r3_code)
+.addTo(map);
+});
+ 
+// Change the cursor to a pointer when the mouse is over the JALON layer.
+map.on('mouseenter', 'zasro', function() {
+map.getCanvas().style.cursor = 'pointer';
+});
+ 
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'zasro', function() {
 map.getCanvas().style.cursor = '';
 });
 });
 
 map.on('load', function() {
 // Add a source for the JALON polygons.
-map.addSource('2jalon', {
+map.addSource('zanro', {
 'type': 'geojson',
 'data':
-'ballereau.8mmvzrs8'
+'ballereau.by2m37ir'
 });
+
  
- 
-// When a click event occurs on a feature in the JALON layer, open a popup at the
+// When a click event occurs on a feature in the states layer, open a popup at the
 // location of the click, with description HTML from its properties.
-map.on('click', '2jalon', function(e) {
+map.on('click', 'zanro', function(e) {
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
-.setHTML('<strong>Jalon 2</strong>' +'</p>'+ "Nom de la zone : " + e.features[0].properties.zs_r3_code +'</p>' + "Date d'ouverture commerciale : " + e.features[0].properties.DATE_OUVERTURE)
+.setHTML('<strong>ZANRO</strong>' +'</p>'+ e.features[0].properties.zn_r2_code)
 .addTo(map);
 });
  
 // Change the cursor to a pointer when the mouse is over the JALON layer.
-map.on('mouseenter', '2jalon', function() {
+map.on('mouseenter', 'zanro', function() {
 map.getCanvas().style.cursor = 'pointer';
 });
  
 // Change it back to a pointer when it leaves.
-map.on('mouseleave', '2jalon', function() {
+map.on('mouseleave', 'zanro', function() {
 map.getCanvas().style.cursor = '';
 });
 });
 
-map.on('load', function() {
-// Add a source for the JALON polygons.
-map.addSource('jalon1', {
-'type': 'geojson',
-'data':
-'ballereau.8p1jbm4k'
-});
- 
- 
-// When a click event occurs on a feature in the JALON layer, open a popup at the
-// location of the click, with description HTML from its properties.
-map.on('click', 'jalon1', function(e) {
-new mapboxgl.Popup()
-.setLngLat(e.lngLat)
-.setHTML('<strong>Jalon 1</strong>' +'</p>'+ "Nom de la zone : " + e.features[0].properties.zs_r3_code +'</p>' + "Date d'ouverture commerciale : " + e.features[0].properties.DATE_OUVERTURE)
-.addTo(map);
-});
- 
-// Change the cursor to a pointer when the mouse is over the JALON layer.
-map.on('mouseenter', 'jalon1', function() {
-map.getCanvas().style.cursor = 'pointer';
-});
- 
-// Change it back to a pointer when it leaves.
-map.on('mouseleave', 'jalon1', function() {
-map.getCanvas().style.cursor = '';
-});
-});
 </script>
 	
-<div id="jalons" class="legend">
-<div><span style="background-color: #39f532"></span>Zones éligibles</div>
-<div><span style="background-color: #6af6ef"></span>Jalon 4</div>
+
+<div id="prises-commercialisables" class="legend">
+Points techniques
+<div><span style="background-color: #ff0000"></span>NRO / SRO</div>
 <small>Source: <a href="http://essonnenumerique.com/"target="_blank">Essonne Numérique</a></small>
-</div>
- 
-<div id="prises-commercialisables" class="legend2">
-Déploiement des bâtiments
-<div><span style="background-color: #2ac537"></span>éligible</div>
-<div><span style="background-color: #F79C0B"></span>en cours de déploiement</div>
 </div>
