@@ -113,12 +113,12 @@ new mapboxgl.Popup()
 });
  
 // Change the cursor to a pointer when the mouse is over the SRO layer.
-map.on('mouseenter', 'sro', function() {
+map.on('mouseenter', 'nro', function() {
 map.getCanvas().style.cursor = 'pointer';
 });
  
 // Change it back to a pointer when it leaves.
-map.on('mouseleave', 'sro', function() {
+map.on('mouseleave', 'nro', function() {
 map.getCanvas().style.cursor = '';
 });
 
@@ -185,7 +185,7 @@ map.getCanvas().style.cursor = '';
 </script>
 	
 
-<div id="prises-commercialisables" class="legend">
+<div id="sro" class="legend">
 Points techniques
 <div><span style="background-color: #ff0000"></span>NRO / SRO</div>
 <small>Source: <a href="http://essonnenumerique.com/"target="_blank">Essonne Numérique</a></small>
